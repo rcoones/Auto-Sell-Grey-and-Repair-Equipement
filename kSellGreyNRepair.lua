@@ -19,24 +19,9 @@ limitations under the License.
 
 local function OnEvent(self, event)
 	-- Auto Sell Grey Items
-	totalPrice = 0	
-	for myBags = 0,4 do
-		for bagSlots = 1, C_Container.GetContainerNumSlots(myBags) do
-			CurrentItemLink = C_Container.GetContainerItemLink(myBags, bagSlots)
-			if CurrentItemLink then
-				_, _, itemRarity, _, _, _, _, _, _, _, itemSellPrice = GetItemInfo(CurrentItemLink)
-				itemInfo = C_Container.GetContainerItemInfo(myBags, bagSlots)
-				if itemRarity == 0 and itemSellPrice ~= 0 then
-					totalPrice = totalPrice + (itemSellPrice * itemInfo.stackCount)
-					C_Container.UseContainerItem(myBags, bagSlots)
-					PickupMerchantItem()
-				end
-			end
-		end
-	end
-	if totalPrice ~= 0 then
-		DEFAULT_CHAT_FRAME:AddMessage("Items were sold for "..GetCoinTextureString(totalPrice), 255, 255, 255)
-	end
+    if C_MerchantFrame.GetNumJunkItems() > 0 then
+        C_MerchantFrame.SellAllJunkItems()
+    end
 
 	-- Auto Repair
 	if (CanMerchantRepair()) then	
