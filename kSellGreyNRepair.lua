@@ -16,6 +16,7 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 ]]
+local _, L = ...
 
 local function OnEvent(self, event)
 	-- Auto Sell Grey Items
@@ -35,7 +36,7 @@ local function OnEvent(self, event)
 		end
 	end
 	if totalPrice ~= 0 then
-		DEFAULT_CHAT_FRAME:AddMessage("Items were sold for "..GetCoinTextureString(totalPrice), 255, 255, 255)
+		DEFAULT_CHAT_FRAME:AddMessage(L.VENDOR..GetCoinTextureString(totalPrice), 255, 255, 255)
 	end
 
 	-- Auto Repair
@@ -55,14 +56,14 @@ local function OnEvent(self, event)
 				if (amount >= repairAllCost) then
 					RepairAllItems(true);
 					guildRepairedItems = true
-					DEFAULT_CHAT_FRAME:AddMessage("Equipment has been repaired by your Guild for "..costTextureString, 255, 255, 255)
+					DEFAULT_CHAT_FRAME:AddMessage(L.GUILD..costTextureString, 255, 255, 255)
 				end
 			end
 			
 			-- Use own funds
 			if (repairAllCost <= GetMoney() and not guildRepairedItems) then
 				RepairAllItems(false);
-				DEFAULT_CHAT_FRAME:AddMessage("Equipment has been repaired for "..costTextureString, 255, 255, 255)
+				DEFAULT_CHAT_FRAME:AddMessage(L.PERSONAL..costTextureString, 255, 255, 255)
 			end
 		end
 	end
