@@ -17,7 +17,19 @@ See the License for the specific language governing permissions and
 limitations under the License.
 ]]
 
-local function OnEvent(self, event)
+kSellGreyNRepair = LibStub("AceAddon-3.0"):NewAddon("kSellGreyNRepair", "AceConsole-3.0", "AceEvent-3.0")
+
+function kSellGreyNRepair:OnInitialize()
+    self:RegisterEvent("MERCHANT_SHOW")
+end
+
+function kSellGreyNRepair:OnEnable()
+end
+
+function kSellGreyNRepair:OnDisable()
+end
+
+function kSellGreyNRepair:MERCHANT_SHOW()
 	-- Auto Sell Grey Items
 	totalPrice = 0	
 	for myBags = 0,4 do
@@ -67,8 +79,3 @@ local function OnEvent(self, event)
 		end
 	end
 end
-
-
-local f = CreateFrame("Frame")
-f:SetScript("OnEvent", OnEvent);
-f:RegisterEvent("MERCHANT_SHOW");
