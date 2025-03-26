@@ -20,7 +20,14 @@ limitations under the License.
 local function OnEvent(self, event)
 	-- Auto Sell Grey Items
     if C_MerchantFrame.GetNumJunkItems() > 0 then
+		local totalPrice = GetMoney()
         C_MerchantFrame.SellAllJunkItems()
+		-- It takes a second for GetMoney() to register the change in money after the PLAYER_MONEY event happens
+		-- So we use this timer to wait 1 and then report the result of our junk item sell.
+		C_Timer.After(1, function ()
+			totalPrice = GetMoney() - totalPrice
+			self:Print("Items were sold for "..C_CurrencyInfo.GetCoinTextureString(totalPrice))
+		end)
     end
 
 	-- Auto Repair
@@ -28,7 +35,7 @@ local function OnEvent(self, event)
 		repairAllCost, canRepair = GetRepairAllCost();
 		-- If merchant can repair and there is something to repair
 		if (canRepair and repairAllCost > 0) then
-                        costTextureString = GetCoinTextureString(repairAllCost);
+			costTextureString = GetCoinTextureString(repairAllCost);
 			-- Use Guild Bank
 			guildRepairedItems = false
 			if (IsInGuild() and CanGuildBankRepair()) then
